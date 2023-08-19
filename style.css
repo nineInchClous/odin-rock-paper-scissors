@@ -12,6 +12,9 @@ body {
   background-color: whitesmoke;
   color: #333;
   font-family: 'Cutive Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
@@ -20,28 +23,20 @@ body {
   margin: 0 auto;
 }
 
-.flex-center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-}
-
 h1 {
   margin-top: 10px;
-  margin-bottom: 50px;
-  font-size: 1.2rem;
+  margin-bottom: 70px;
+  font-size: 1.5rem;
 }
 
 p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 button {
   color: inherit;
   padding: 20px;
-  font-size: 2rem;
+  font-size: 2.5rem;
   border: none;
   background-color: #333;
   color: whitesmoke;
@@ -77,6 +72,29 @@ button {
 }
 
 #result-sect {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  margin-bottom: 10px;
+}
+
+footer a {
+  color: #333;
+  font-size: 2rem;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+footer a:hover {
+  color: #444;
+  transform: rotate(360deg);
 }
