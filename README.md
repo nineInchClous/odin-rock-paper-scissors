@@ -1,1 +1,1 @@
-# odin-rock-paper-scissors
+# Odin project - Minimalist rock, paper, scissors
