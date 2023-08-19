@@ -12,21 +12,50 @@ replayButton.addEventListener('click', replayGame);
 
 const scores = { player: 0, computer: 0 };
 
+let intervals = [];
+
 /**
  * Handle click on buttons
  * @param {*} playerChoice Player choice this round ('Rock', 'Paper', or 'Scissors')
  */
 function handleClick(playerChoice) {
+  // Clear all intervals (for animation)
+  for (let i = 0; i < 9999; i++) {
+    clearInterval(i);
+  }
+
   const roundResult = playRound(playerChoice, getComputerChoice());
   const currentScore = addScore(roundResult, scores);
 
-  resultPara.textContent = roundResult;
-  scorePara.textContent = currentScore;
+  write(resultPara, roundResult);
+  write(scorePara, currentScore, 1500);
 
   if (currentScore.includes('5')) {
     // Check who won based on the position of the max score (5) in the score string
     currentScore.indexOf('5') === 8 ? endGame(true) : endGame(false);
   }
+}
+
+/**
+ * Add some text to a Node with animation
+ * @param {object} para Node to add text
+ * @param {string} str Text to add to a Node
+ * @param {number} timeout Time (in ms) before the animation starts
+ */
+function write(para, str, timeout = 0) {
+  para.textContent = '';
+  let i = 0;
+
+  setTimeout(() => {
+    const interval = setInterval(() => {
+      para.textContent += str[i];
+      i++;
+      if (i >= str.length) {
+        clearInterval(interval);
+      }
+    }, 30);
+  }, timeout);
+
 }
 
 /**
@@ -37,7 +66,11 @@ function endGame(playerWins) {
   buttons.forEach((button) => { button.disabled = true; });
   replayButton.hidden = false;
 
-  playerWins ? victoryPara.textContent = 'Player wins' : victoryPara.textContent = 'Computer wins';
+  if (playerWins) {
+    write(victoryPara, 'You win the game, nice work.', 2500);
+  } else {
+    write(victoryPara, 'Computer wins the game, you should try again.', 2500);
+  }
 }
 
 /**
@@ -73,19 +106,24 @@ function playRound(playerChoice, computerChoice) {
   // Make the function case-insensitive
   playerChoice = playerChoice.toUpperCase();
   computerChoice = computerChoice.toUpperCase();
+  let output = 'Computer choose ' + computerChoice + '... ';
 
   // Tie
   if (playerChoice === computerChoice) {
-    return 'That\'s a tie!';
+    output += 'That\'s a tie.';
   }
   // Player wins
   else if (playerChoice === 'ROCK' && computerChoice === 'SCISSORS' ||
     playerChoice === 'PAPER' && computerChoice === 'ROCK' ||
     playerChoice === 'SCISSORS' && computerChoice === 'PAPER') {
-    return `You win! ${playerChoice} beats ${computerChoice}.`
+    output += `You win. (${playerChoice} beats ${computerChoice})`;
   }
   // Computer wins
-  return `You loose! ${computerChoice} beats ${playerChoice}`;
+  else {
+    output += `You lose. (${computerChoice} beats ${playerChoice})`;
+  }
+
+  return output;
 }
 
 /**
@@ -97,7 +135,7 @@ function addScore(roundResult, scores) {
   if (roundResult.includes('win')) {
     scores.player++;
   }
-  else if (roundResult.includes('loose')) {
+  else if (roundResult.includes('lose')) {
     scores.computer++;
   }
 

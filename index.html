@@ -4,25 +4,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Odin - Rock Paper Scissors</title>
+  <title>Odin - Minimalist Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
   <script src="https://kit.fontawesome.com/9fc52b5779.js"
     crossorigin="anonymous"></script>
 </head>
 
-<body>
-  <h1>Odin project - rock, paper, scissors</h1>
-  <section id="btns-sect">
-    <button type="button"><i class="fa-regular fa-hand-back-fist"></i></button>
-    <button type="button"><i class="fa-regular fa-hand"></i></button>
-    <button type="button"><i class="fa-regular fa-hand-scissors"></i></button>
-  </section>
-  <section id="result-sect">
-    <p id="round-result"></p>
-    <p id="score"></p>
-    <p id="victory"></p>
-  </section>
-  <button type="button" id="replay-btn" hidden>Play again</button>
+<body class="container">
+  <h1>odin project - rock, paper, scissors</h1>
+  <div class="flex-center">
+    <section id="btns-sect">
+      <button type="button"><i
+          class="fa-regular fa-hand-back-fist"></i></button>
+      <button type="button"><i class="fa-regular fa-hand"></i></button>
+      <button type="button"><i class="fa-regular fa-hand-scissors"></i></button>
+    </section>
+    <section id="result-sect">
+      <p id="computer-choice"></p>
+      <p id="round-result"></p>
+      <p id="score"></p>
+      <p id="victory"></p>
+    </section>
+    <button type="button" id="replay-btn" hidden>Play again</button>
+  </div>
 </body>
 
 </html>
