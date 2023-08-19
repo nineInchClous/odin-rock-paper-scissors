@@ -1,7 +1,17 @@
 const buttons = document.querySelectorAll('#btns-sect button');
-buttons[0].addEventListener('click', () => { playRound('rock', getComputerChoice()) });
-buttons[1].addEventListener('click', () => { playRound('paper', getComputerChoice()) });
-buttons[2].addEventListener('click', () => { playRound('scissors', getComputerChoice()) });
+buttons[0].addEventListener('click', () => { handleClick('rock') });
+buttons[1].addEventListener('click', () => { handleClick('paper') });
+buttons[2].addEventListener('click', () => { handleClick('scissors') });
+const resultSection = document.querySelector('#result-sect');
+
+/**
+ * Handle click on buttons
+ * @param {*} playerChoice Player choice this round ('Rock', 'Paper', or 'Scissors')
+ */
+function handleClick(playerChoice) {
+  const roundResult = playRound(playerChoice, getComputerChoice());
+  resultSection.textContent = roundResult;
+}
 
 /**
  * Randomly return 'Rock', 'Paper' or 'Scissors'.
@@ -26,7 +36,7 @@ function playRound(playerChoice, computerChoice) {
 
   // Tie
   if (playerChoice === computerChoice) {
-    return 'That\' a tie!';
+    return 'That\'s a tie!';
   }
   // Player wins
   else if (playerChoice === 'ROCK' && computerChoice === 'SCISSORS' ||
