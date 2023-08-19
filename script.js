@@ -5,6 +5,10 @@ buttons[2].addEventListener('click', () => { handleClick('scissors') });
 
 const resultPara = document.querySelector('#result-sect #round-result');
 const scorePara = document.querySelector('#result-sect #score');
+const victoryPara = document.querySelector('#result-sect #victory');
+
+const replayButton = document.querySelector('#replay-btn');
+replayButton.addEventListener('click', replayGame);
 
 const scores = { player: 0, computer: 0 };
 
@@ -18,6 +22,35 @@ function handleClick(playerChoice) {
 
   resultPara.textContent = roundResult;
   scorePara.textContent = currentScore;
+
+  if (currentScore.includes('5')) {
+    // Check who won based on the position of the max score (5) in the score string
+    currentScore.indexOf('5') === 8 ? endGame(true) : endGame(false);
+  }
+}
+
+/**
+ * End the game and display results
+ * @param {boolean} playerWins Does the player won this game ?
+ */
+function endGame(playerWins) {
+  buttons.forEach((button) => { button.disabled = true; });
+  replayButton.hidden = false;
+
+  playerWins ? victoryPara.textContent = 'Player wins' : victoryPara.textContent = 'Computer wins';
+}
+
+/**
+ * Reset all values to replay a game
+ */
+function replayGame() {
+  buttons.forEach((button) => { button.disabled = false; });
+  replayButton.hidden = true;
+  resultPara.textContent = '';
+  scorePara.textContent = '';
+  victoryPara.textContent = '';
+  scores.player = 0;
+  scores.computer = 0;
 }
 
 /**
@@ -55,22 +88,6 @@ function playRound(playerChoice, computerChoice) {
   return `You loose! ${computerChoice} beats ${playerChoice}`;
 }
 
-// /**
-//  * Check if the player's choice is a valid choice ('Rock', 'Paper', or 'Scissors')
-//  * @param {string} playerChoice Player choice this round ('Rock', 'Paper', or 'Scissors')
-//  * @returns {boolean} True if the player choice is either 'Rock', 'Paper', or 'Scissors', otherwise return false
-//  */
-// function validPlayerChoice(playerChoice) {
-//   if (playerChoice === null) {
-//     return false;
-//   }
-
-//   // Make the function case-insensitive
-//   playerChoice = playerChoice.toUpperCase();
-
-//   return playerChoice === 'ROCK' || playerChoice === 'PAPER' || playerChoice === 'SCISSORS';
-// }
-
 /**
  * Add score for the player or the computer based on the round result
  * @param {string} roundResult Result of the round
@@ -86,42 +103,3 @@ function addScore(roundResult, scores) {
 
   return `Player: ${scores.player} - Computer: ${scores.computer}`;
 }
-
-// /**
-//  * Play a full game (5 rounds) of rock, paper, scissors
-//  */
-// function game() {
-//   // Initialize variables
-//   const scores = { player: 0, computer: 0 };
-//   let playerChoice = '';
-//   let computerChoice = '';
-//   let roundResult = '';
-
-//   // Play 5 rounds
-//   for (let i = 0; i < 5; i++) {
-//     // Make sure the player enters a valid choice
-//     while (!validPlayerChoice(playerChoice)) {
-//       playerChoice = prompt('Enter "Rock", "Paper", or "Scissors" to play: ');
-
-//       // Log error message if the choice is not valid
-//       if (!validPlayerChoice(playerChoice)) {
-//         console.log('Wrong value, please enter "Rock", "Paper", or "Scissors".');
-//       }
-//     }
-
-//     // Play the round
-//     computerChoice = getComputerChoice();
-//     roundResult = playRound(playerChoice, computerChoice);
-//     addScore(roundResult, scores);
-
-//     // Log choices
-//     console.log(`You chose ${playerChoice}.\nComputer chose ${computerChoice}.`);
-
-//     // Log round result and scores
-//     console.log(roundResult);
-//     console.log(`Your score: ${scores.player} | Computer's score: ${scores.computer}`);
-
-//     // Reset playerChoice
-//     playerChoice = '';
-//   }
-// }
