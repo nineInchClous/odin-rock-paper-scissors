@@ -2,7 +2,11 @@ const buttons = document.querySelectorAll('#btns-sect button');
 buttons[0].addEventListener('click', () => { handleClick('rock') });
 buttons[1].addEventListener('click', () => { handleClick('paper') });
 buttons[2].addEventListener('click', () => { handleClick('scissors') });
-const resultSection = document.querySelector('#result-sect');
+
+const resultPara = document.querySelector('#result-sect #round-result');
+const scorePara = document.querySelector('#result-sect #score');
+
+const scores = { player: 0, computer: 0 };
 
 /**
  * Handle click on buttons
@@ -10,7 +14,10 @@ const resultSection = document.querySelector('#result-sect');
  */
 function handleClick(playerChoice) {
   const roundResult = playRound(playerChoice, getComputerChoice());
-  resultSection.textContent = roundResult;
+  const currentScore = addScore(roundResult, scores);
+
+  resultPara.textContent = roundResult;
+  scorePara.textContent = currentScore;
 }
 
 /**
@@ -76,6 +83,8 @@ function addScore(roundResult, scores) {
   else if (roundResult.includes('loose')) {
     scores.computer++;
   }
+
+  return `Player: ${scores.player} - Computer: ${scores.computer}`;
 }
 
 // /**
